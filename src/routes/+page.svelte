@@ -1,10 +1,10 @@
 <script lang="ts">
 	const EVENT = {
-		name: 'Maplewood Drive Block Party',
+		name: 'Nevada Avenue Block Party',
 		date: 'Saturday, July 19, 2025',
 		time: '3:00 PM – 8:00 PM',
-		location: 'Maplewood Drive Cul-de-sac',
-		address: '100–200 Block of Maplewood Drive',
+		location: 'Nevada Avenue Cul-de-sac',
+		address: '100–200 Block of Nevada Avenue',
 		description: `Join your neighbors for our annual block party! We'll have lawn games, music, and great food. Bring the whole family — kids, dogs, and lawn chairs welcome.`
 	};
 </script>

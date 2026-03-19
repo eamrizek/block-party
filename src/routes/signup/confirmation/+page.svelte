@@ -20,7 +20,7 @@
 		<p>Thanks for signing up. We can't wait to see you at the block party!</p>
 		<p class="muted">
 			Saturday, July 19, 2025 · 3:00 PM – 8:00 PM<br />
-			Maplewood Drive Cul-de-sac
+			Nevada Avenue Cul-de-sac
 		</p>
 		<div class="actions">
 			<a href="/" class="btn btn-outline">Back to Event Info</a>
