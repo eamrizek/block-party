@@ -1,4 +1,5 @@
 import type { RequestEvent } from '@sveltejs/kit';
+import { env } from '$env/dynamic/private';
 
 const COOKIE_NAME = 'admin_session';
 const COOKIE_VALUE = 'authenticated';
@@ -22,7 +23,7 @@ export function clearAuthCookie(event: RequestEvent) {
 }
 
 export function checkAdminPassword(password: string): boolean {
-	const adminPassword = process.env.ADMIN_PASSWORD;
+	const adminPassword = env.ADMIN_PASSWORD;
 	if (!adminPassword) {
 		console.error('ADMIN_PASSWORD env var not set');
 		return false;
