@@ -15,12 +15,14 @@ export const actions: Actions = {
 
 		const name = (data.get('name') as string)?.trim();
 		const message = (data.get('message') as string)?.trim();
+		const parentIdRaw = data.get('parent_id') as string | null;
+		const parent_id = parentIdRaw ? parseInt(parentIdRaw) : null;
 
 		if (!name || name.length > 100) return fail(400, { error: 'Please enter your name (max 100 characters).' });
 		if (!message || message.length > 1000) return fail(400, { error: 'Please enter a message (max 1000 characters).' });
 
-		createComment(name, message);
+		createComment(name, message, parent_id);
 
-		return { success: true };
+		return { success: true, parent_id };
 	}
 };

@@ -6,6 +6,8 @@
 	export let data: PageData;
 	export let form: ActionData;
 
+	let replyingTo: number | null = null;
+
 	function formatDate(dateStr: string) {
 		return new Date(dateStr + 'Z').toLocaleDateString('en-US', {
 			month: 'short', day: 'numeric', year: 'numeric'
@@ -20,13 +22,15 @@
 <Nav />
 
 <main class="container">
-	<h1>Comments & Questions</h1>
-	<p class="intro">Have a question or something to share with the neighborhood? Post it here!</p>
+	<div class="card title-card">
+		<h1>Comments & Questions</h1>
+		<p class="intro">Have a question or something to share with the neighborhood? Post it here!</p>
+	</div>
 
 	<div class="card form-card">
 		<h2>Leave a Comment</h2>
 
-		{#if form?.success}
+		{#if form?.success && !form?.parent_id}
 			<div class="success">Your comment was posted! Thanks for sharing.</div>
 		{/if}
 		{#if form?.error}
@@ -34,7 +38,6 @@
 		{/if}
 
 		<form method="POST" use:enhance>
-			<!-- Honeypot -->
 			<div class="hp-field" aria-hidden="true">
 				<label for="website">Website (leave blank)</label>
 				<input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
@@ -69,6 +72,48 @@
 							<span class="comment-date">{formatDate(comment.created_at)}</span>
 						</div>
 						<p class="comment-message">{comment.message}</p>
+
+						<button class="reply-toggle" on:click={() => replyingTo = replyingTo === comment.id ? null : comment.id}>
+							{replyingTo === comment.id ? 'Cancel' : '↩ Reply'}
+						</button>
+
+						{#if replyingTo === comment.id}
+							<div class="reply-form">
+								{#if form?.success && form?.parent_id === comment.id}
+									<div class="success">Reply posted!</div>
+								{/if}
+								<form method="POST" use:enhance={{ onResult: () => { replyingTo = null; } }}>
+									<div class="hp-field" aria-hidden="true">
+										<label for="website-{comment.id}">Website (leave blank)</label>
+										<input type="text" id="website-{comment.id}" name="website" tabindex="-1" autocomplete="off" />
+									</div>
+									<input type="hidden" name="parent_id" value={comment.id} />
+									<div class="form-group">
+										<label for="reply-name-{comment.id}">Your Name <span class="required">*</span></label>
+										<input type="text" id="reply-name-{comment.id}" name="name" required maxlength="100" placeholder="Jane Smith" />
+									</div>
+									<div class="form-group">
+										<label for="reply-message-{comment.id}">Reply <span class="required">*</span></label>
+										<textarea id="reply-message-{comment.id}" name="message" rows="3" required maxlength="1000" placeholder="Write a reply..."></textarea>
+									</div>
+									<button type="submit" class="btn btn-primary btn-sm">Post Reply</button>
+								</form>
+							</div>
+						{/if}
+
+						{#if comment.replies && comment.replies.length > 0}
+							<div class="replies">
+								{#each comment.replies as reply}
+									<div class="reply">
+										<div class="comment-header">
+											<span class="comment-name">{reply.name}</span>
+											<span class="comment-date">{formatDate(reply.created_at)}</span>
+										</div>
+										<p class="comment-message">{reply.message}</p>
+									</div>
+								{/each}
+							</div>
+						{/if}
 					</div>
 				{/each}
 			</div>
@@ -81,14 +126,19 @@
 </footer>
 
 <style>
+	.title-card {
+		margin-top: 2rem;
+		margin-bottom: 1.5rem;
+	}
+
 	h1 {
-		padding-top: 2rem;
+		margin-top: 0;
 		margin-bottom: 0.5rem;
 	}
 
 	.intro {
 		color: var(--color-text-muted);
-		margin-bottom: 1.5rem;
+		margin-bottom: 0;
 	}
 
 	.form-card {
@@ -146,8 +196,48 @@
 	}
 
 	.comment-message {
-		margin: 0;
+		margin: 0 0 0.75rem 0;
 		white-space: pre-wrap;
+	}
+
+	.reply-toggle {
+		background: none;
+		border: none;
+		color: var(--color-primary);
+		font-size: 0.875rem;
+		font-weight: 600;
+		cursor: pointer;
+		padding: 0;
+	}
+
+	.reply-toggle:hover {
+		text-decoration: underline;
+	}
+
+	.reply-form {
+		margin-top: 1rem;
+		padding: 1rem;
+		background: #f8f9fa;
+		border-radius: var(--radius);
+		border-left: 3px solid var(--color-primary);
+	}
+
+	.replies {
+		margin-top: 1rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.reply {
+		padding: 0.75rem 1rem;
+		background: #f8f9fa;
+		border-radius: var(--radius);
+		border-left: 3px solid var(--color-border);
+	}
+
+	.reply .comment-message {
+		margin: 0;
 	}
 
 	.empty {

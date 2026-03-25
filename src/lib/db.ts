@@ -42,10 +42,18 @@ export function getDb(): Database.Database {
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			name TEXT NOT NULL,
 			message TEXT NOT NULL,
+			parent_id INTEGER REFERENCES comments(id),
 			honeypot TEXT,
 			created_at TEXT NOT NULL DEFAULT (datetime('now'))
 		);
 	`);
+
+	// Migration: add parent_id to existing comments tables that predate this column
+	try {
+		_db.exec(`ALTER TABLE comments ADD COLUMN parent_id INTEGER REFERENCES comments(id)`);
+	} catch {
+		// Column already exists, nothing to do
+	}
 
 	return _db;
 }
@@ -124,17 +132,39 @@ export type Comment = {
 	id: number;
 	name: string;
 	message: string;
+	parent_id: number | null;
 	created_at: string;
+	replies?: Comment[];
 };
 
 export function getComments(): Comment[] {
 	const db = getDb();
-	return db.prepare(`SELECT id, name, message, created_at FROM comments ORDER BY created_at DESC`).all() as Comment[];
+	const all = db.prepare(`
+		SELECT id, name, message, parent_id, created_at
+		FROM comments
+		ORDER BY created_at ASC
+	`).all() as Comment[];
+
+	// Nest replies under their parent
+	const top: Comment[] = [];
+	const byId = new Map<number, Comment>();
+	for (const c of all) {
+		c.replies = [];
+		byId.set(c.id, c);
+	}
+	for (const c of all) {
+		if (c.parent_id && byId.has(c.parent_id)) {
+			byId.get(c.parent_id)!.replies!.push(c);
+		} else {
+			top.push(c);
+		}
+	}
+	return top.reverse(); // newest top-level first
 }
 
-export function createComment(name: string, message: string) {
+export function createComment(name: string, message: string, parent_id: number | null = null) {
 	const db = getDb();
-	return db.prepare(`INSERT INTO comments (name, message) VALUES (?, ?)`).run(name, message);
+	return db.prepare(`INSERT INTO comments (name, message, parent_id) VALUES (?, ?, ?)`).run(name, message, parent_id);
 }
 
 export function createSignup(
