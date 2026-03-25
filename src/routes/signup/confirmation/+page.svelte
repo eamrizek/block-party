@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import Nav from '$lib/Nav.svelte';
 	const name = $page.url.searchParams.get('name') || 'Neighbor';
 </script>
 
@@ -7,11 +8,7 @@
 	<title>Thanks! – Block Party</title>
 </svelte:head>
 
-<nav>
-	<div class="inner">
-		<a href="/" class="site-title">🎉 Block Party</a>
-	</div>
-</nav>
+<Nav />
 
 <main class="container">
 	<div class="confirmation">
@@ -19,7 +16,7 @@
 		<h1>You're on the list, {name}!</h1>
 		<p>Thanks for signing up. We can't wait to see you at the block party!</p>
 		<p class="muted">
-			Saturday, July 19, 2025 · 3:00 PM – 8:00 PM<br />
+			Saturday, June 20, 2026 · 3:00 PM – 8:00 PM<br />
 			Nevada Avenue Cul-de-sac
 		</p>
 		<div class="actions">

@@ -1,10 +1,12 @@
 <script lang="ts">
+	import Nav from '$lib/Nav.svelte';
+
 	const EVENT = {
 		name: 'Nevada Avenue Block Party',
-		date: 'Saturday, July 19, 2025',
+		date: 'Saturday, June 20, 2026',
 		time: '3:00 PM – 8:00 PM',
-		location: 'Nevada Avenue Cul-de-sac',
-		address: '100–200 Block of Nevada Avenue',
+		location: 'Curtiss Ave between Nevada Ave and Jansen Ave',
+		address: '',
 		description: `Join your neighbors for our annual block party! We'll have lawn games, music, and great food. Bring the whole family — kids, dogs, and lawn chairs welcome.`
 	};
 </script>
@@ -13,15 +15,10 @@
 	<title>{EVENT.name}</title>
 </svelte:head>
 
-<nav>
-	<div class="inner">
-		<span class="site-title">🎉 {EVENT.name}</span>
-		<a href="/signup">Sign Up</a>
-	</div>
-</nav>
+<Nav />
 
 <main class="container">
-	<section class="hero">
+	<section class="hero card">
 		<h1>{EVENT.name}</h1>
 		<div class="event-details">
 			<div class="detail">
@@ -43,10 +40,10 @@
 				<div>
 					<strong>Location</strong>
 					<span>{EVENT.location}</span>
-					<span class="muted">{EVENT.address}</span>
 				</div>
 			</div>
 		</div>
+		<img src="/block_party_location.png" alt="Map showing Curtiss Ave between Nevada Ave and Jansen Ave" class="location-map" />
 		<p class="description">{EVENT.description}</p>
 		<a href="/signup" class="btn btn-primary">Sign Up to Bring Something</a>
 	</section>
@@ -70,7 +67,9 @@
 
 <style>
 	.hero {
-		padding: 3rem 0 2rem;
+		padding: 2rem 1.5rem;
+		margin-top: 2rem;
+		margin-bottom: 1.5rem;
 	}
 
 	h1 {
@@ -105,6 +104,12 @@
 	.muted {
 		color: var(--color-text-muted);
 		font-size: 0.9rem;
+	}
+
+	.location-map {
+		width: 100%;
+		border-radius: var(--radius);
+		margin-bottom: 1.5rem;
 	}
 
 	.description {

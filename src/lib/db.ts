@@ -37,6 +37,14 @@ export function getDb(): Database.Database {
 			honeypot TEXT,
 			created_at TEXT NOT NULL DEFAULT (datetime('now'))
 		);
+
+		CREATE TABLE IF NOT EXISTS comments (
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			name TEXT NOT NULL,
+			message TEXT NOT NULL,
+			honeypot TEXT,
+			created_at TEXT NOT NULL DEFAULT (datetime('now'))
+		);
 	`);
 
 	return _db;
@@ -110,6 +118,23 @@ export function getSignups(): Signup[] {
 		JOIN categories c ON c.id = s.category_id
 		ORDER BY s.created_at DESC
 	`).all() as Signup[];
+}
+
+export type Comment = {
+	id: number;
+	name: string;
+	message: string;
+	created_at: string;
+};
+
+export function getComments(): Comment[] {
+	const db = getDb();
+	return db.prepare(`SELECT id, name, message, created_at FROM comments ORDER BY created_at DESC`).all() as Comment[];
+}
+
+export function createComment(name: string, message: string) {
+	const db = getDb();
+	return db.prepare(`INSERT INTO comments (name, message) VALUES (?, ?)`).run(name, message);
 }
 
 export function createSignup(

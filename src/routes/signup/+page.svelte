@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageData, ActionData } from './$types';
 	import { enhance } from '$app/forms';
+	import Nav from '$lib/Nav.svelte';
 
 	export let data: PageData;
 	export let form: ActionData;
@@ -30,16 +31,13 @@
 	<title>Sign Up – Block Party</title>
 </svelte:head>
 
-<nav>
-	<div class="inner">
-		<a href="/" class="site-title">🎉 Block Party</a>
-		<a href="/signup">Sign Up</a>
-	</div>
-</nav>
+<Nav />
 
 <main class="container">
-	<h1>Sign Up to Bring Something</h1>
-	<p class="intro">Pick an item from the list below and let us know you're bringing it. No account needed!</p>
+	<div class="card title-card">
+		<h1>Sign Up to Bring Something</h1>
+		<p class="intro">Pick an item from the list below and let us know you're bringing it. No account needed!</p>
+	</div>
 
 	{#if form?.error}
 		<div class="error">{form.error}</div>
@@ -134,14 +132,19 @@
 </footer>
 
 <style>
+	.title-card {
+		margin-top: 2rem;
+		margin-bottom: 1.5rem;
+	}
+
 	h1 {
-		padding-top: 2rem;
+		margin-top: 0;
 		margin-bottom: 0.5rem;
 	}
 
 	.intro {
 		color: var(--color-text-muted);
-		margin-bottom: 1.5rem;
+		margin-bottom: 0;
 	}
 
 	.card {

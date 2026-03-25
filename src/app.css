@@ -5,8 +5,8 @@
 :root {
 	--color-bg: #fffbf0;
 	--color-surface: #ffffff;
-	--color-primary: #e67e22;
-	--color-primary-dark: #ca6f1e;
+	--color-primary: #2d7a4f;
+	--color-primary-dark: #1e5c3a;
 	--color-secondary: #2ecc71;
 	--color-secondary-dark: #27ae60;
 	--color-text: #2c3e50;
@@ -22,9 +22,22 @@
 body {
 	margin: 0;
 	font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-	background: var(--color-bg);
+	background: transparent;
 	color: var(--color-text);
 	line-height: 1.6;
+}
+
+body::before {
+	content: '';
+	position: fixed;
+	inset: 0;
+	z-index: -1;
+	background-image: url('/nevada_ave.jpeg');
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+	filter: blur(3px) brightness(0.75) saturate(1.2);
+	transform: scale(1.05); /* prevents blur edge gaps */
 }
 
 h1, h2, h3 {
@@ -134,10 +147,11 @@ nav .site-title {
 }
 
 .card {
-	background: var(--color-surface);
+	background: rgba(255, 255, 255, 0.96);
 	border-radius: var(--radius);
 	box-shadow: var(--shadow);
 	padding: 1.5rem;
+	backdrop-filter: blur(4px);
 }
 
 .form-group {
