@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Seed the database with some starter categories.
+ * Initialize and seed the database with potluck categories.
  * Run: node scripts/init-db.js
  */
 import Database from 'better-sqlite3';
@@ -31,6 +31,14 @@ db.exec(`
     honeypot TEXT,
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
   );
+
+  CREATE TABLE IF NOT EXISTS comments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    message TEXT NOT NULL,
+    honeypot TEXT,
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+  );
 `);
 
 const existing = db.prepare('SELECT COUNT(*) as count FROM categories').get();
@@ -44,14 +52,21 @@ const insert = db.prepare(
 );
 
 const categories = [
-  ['Main Dish', 3, 'Grillable or oven-ready entrée'],
-  ['Side Dish', 4, 'Salads, vegetables, pasta sides'],
-  ['Appetizer / Snacks', 3, 'Chips, dips, finger foods'],
-  ['Dessert', 3, 'Cookies, brownies, cake, etc.'],
-  ['Drinks / Beverages', 2, 'Lemonade, water, soda, etc.'],
-  ['Paper Goods / Utensils', 1, 'Plates, cups, napkins, silverware'],
-  ['Ice / Cooler', 1, 'Bags of ice and/or a cooler'],
-  ['Lawn Game', 2, 'Cornhole, bocce, frisbee, etc.'],
+  ['Beans',               3, 'For 30 people per sign-up'],
+  ['Chips',               3, 'For 30 people per sign-up'],
+  ['Clean-up Volunteer',  8, null],
+  ['Dessert',             5, 'Cookies, brownies, popsicles, etc; For 20 people per sign-up'],
+  ['Fruit',               4, 'For 15 people per sign-up'],
+  ['Guacamole',           3, 'For 15 people per sign-up'],
+  ['Mexican-style beers', 4, null],
+  ['Non-alcoholic drinks',3, 'Bubbly waters, soda, juice boxes, etc'],
+  ['Other Beers',         2, null],
+  ['Rice',                4, 'For 20 people per sign-up'],
+  ['Salad',               2, 'For 20 people per sign-up'],
+  ['Salsa',               4, 'For 15 people per sign-up'],
+  ['Setup Volunteer',     8, null],
+  ['Sliced Limes',        4, 'For tacos or beer; 10 sliced limes per sign-up'],
+  ['Water Bottles',       2, 'For 50 people per sign-up'],
 ];
 
 for (const [name, max_slots, description] of categories) {
