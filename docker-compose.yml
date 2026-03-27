@@ -1,0 +1,14 @@
+services:
+  block-party:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DATA_DIR=/data
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+    volumes:
+      - block-party-data:/data
+    restart: unless-stopped
+
+volumes:
+  block-party-data:
