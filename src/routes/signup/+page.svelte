@@ -36,7 +36,7 @@
 <main class="container">
 	<div class="card title-card">
 		<h1>Sign Up to Bring Something</h1>
-		<p class="intro">If you would like to contribuute, pick an item from the list below to let us know you're bringing it.  The recommend quantity is merely a suggestion to minimize waste or oversupply.</p>
+		<p class="intro">If you would like to contribute, pick an item from the list below to let us know you're bringing it.  The recommend quantity is merely a suggestion to minimize waste or oversupply.</p>
 	</div>
 
 	{#if form?.error}
