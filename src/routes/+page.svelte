@@ -2,7 +2,7 @@
 	import Nav from '$lib/Nav.svelte';
 
 	const EVENT = {
-		name: 'Nevada Avenue Block Party',
+		name: 'Nevada/Jansen/Hill Avenues Block Party',
 		date: 'Saturday, June 20, 2026',
 		time: '3:00 PM – 8:00 PM',
 		location: 'Curtiss Ave between Nevada Ave and Jansen Ave',

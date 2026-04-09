@@ -90,11 +90,10 @@
 						{@const isFull = left <= 0}
 						<label class="category-item" class:disabled={isFull}>
 							<input
-								type="radio"
+								type="checkbox"
 								name="category_id"
 								value={cat.id}
 								disabled={isFull}
-								required
 							/>
 							<div class="category-info">
 								<span class="category-name">{cat.name}</span>
