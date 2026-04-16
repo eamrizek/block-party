@@ -10,7 +10,7 @@
 	<div class="inner">
 		<a href="/" class="site-title">🎉 Block Party</a>
 		<a href="/" class:active={isActive('/')}>Event Info</a>
-		<a href="/signup" class:active={isActive('/signup')}>Potluck Sign-Up</a>
+		<a href="/signup" class:active={isActive('/signup')}>RSVP & Potluck Sign-Up</a>
 		<a href="/comments" class:active={isActive('/comments')}>Comments & Questions</a>
 	</div>
 </nav>

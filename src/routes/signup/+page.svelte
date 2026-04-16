@@ -28,15 +28,15 @@
 </script>
 
 <svelte:head>
-	<title>Sign Up – Block Party</title>
+	<title>RSVP & Potluck Sign-Up – Block Party</title>
 </svelte:head>
 
 <Nav />
 
 <main class="container">
 	<div class="card title-card">
-		<h1>Sign Up to Bring Something</h1>
-		<p class="intro">If you would like to contribute, pick an item from the list below to let us know you're bringing it.  The recommend quantity is merely a suggestion to minimize waste or oversupply.</p>
+		<h1>RSVP & Potluck Sign-Up</h1>
+		<p class="intro">Let us know you're planning to come! We use RSVPs to get a general idea of head count for food purchasing — <strong>you don't need to RSVP to attend</strong>, and you're always welcome to just show up. If you'd like to contribute a dish, you can also sign up for a potluck item below.</p>
 	</div>
 
 	{#if form?.error}
@@ -76,10 +76,24 @@
 				/>
 				<small class="hint">Only visible to the organizer, not shared publicly.</small>
 			</div>
+
+			<div class="form-group">
+				<label for="guest_count">Party Size <span class="required">*</span></label>
+				<input
+					type="number"
+					id="guest_count"
+					name="guest_count"
+					required
+					min="1"
+					max="50"
+					value="1"
+				/>
+				<small class="hint">How many people are you RSVPing for (including yourself)?</small>
+			</div>
 		</div>
 
 		<div class="card">
-			<h2>What Will You Bring?</h2>
+			<h2>Potluck Sign-Up <span class="optional">(optional)</span></h2>
 
 			{#if categories.length === 0}
 				<p class="empty">No items have been set up yet. Check back soon!</p>
@@ -122,7 +136,7 @@
 			</div>
 		</div>
 
-		<button type="submit" class="btn btn-primary btn-large">Sign Me Up!</button>
+		<button type="submit" class="btn btn-primary btn-large">RSVP!</button>
 	</form>
 </main>
 

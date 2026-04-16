@@ -46,11 +46,27 @@ export function getDb(): Database.Database {
 			honeypot TEXT,
 			created_at TEXT NOT NULL DEFAULT (datetime('now'))
 		);
+
+		CREATE TABLE IF NOT EXISTS rsvps (
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			name TEXT NOT NULL,
+			contact_info TEXT,
+			guest_count INTEGER NOT NULL DEFAULT 1,
+			notes TEXT,
+			created_at TEXT NOT NULL DEFAULT (datetime('now'))
+		);
 	`);
 
 	// Migration: add parent_id to existing comments tables that predate this column
 	try {
 		_db.exec(`ALTER TABLE comments ADD COLUMN parent_id INTEGER REFERENCES comments(id)`);
+	} catch {
+		// Column already exists, nothing to do
+	}
+
+	// Migration: add guest_count to existing rsvps tables
+	try {
+		_db.exec(`ALTER TABLE rsvps ADD COLUMN guest_count INTEGER NOT NULL DEFAULT 1`);
 	} catch {
 		// Column already exists, nothing to do
 	}
@@ -165,6 +181,25 @@ export function getComments(): Comment[] {
 export function createComment(name: string, message: string, parent_id: number | null = null) {
 	const db = getDb();
 	return db.prepare(`INSERT INTO comments (name, message, parent_id) VALUES (?, ?, ?)`).run(name, message, parent_id);
+}
+
+export type Rsvp = {
+	id: number;
+	name: string;
+	contact_info: string | null;
+	guest_count: number;
+	notes: string | null;
+	created_at: string;
+};
+
+export function getRsvps(): Rsvp[] {
+	const db = getDb();
+	return db.prepare(`SELECT * FROM rsvps ORDER BY created_at DESC`).all() as Rsvp[];
+}
+
+export function createRsvp(name: string, contact_info: string | null, guest_count: number, notes: string | null) {
+	const db = getDb();
+	return db.prepare(`INSERT INTO rsvps (name, contact_info, guest_count, notes) VALUES (?, ?, ?, ?)`).run(name, contact_info, guest_count, notes);
 }
 
 export function createSignup(

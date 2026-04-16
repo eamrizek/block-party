@@ -4,7 +4,7 @@
 	const EVENT = {
 		name: 'Nevada/Jansen/Hill Avenues Block Party',
 		date: 'Saturday, June 20, 2026',
-		time: '3:00 PM – 8:00 PM',
+		time: '3:00 PM – 7:00 PM',
 		location: 'Curtiss Ave between Nevada Ave and Jansen Ave',
 		address: '',
 		description: `Join your neighbors for our annual block party! We'll have games, music, and great food. Bring the whole family — kids, dogs, and lawn chairs welcome.`

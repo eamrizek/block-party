@@ -1,8 +1,9 @@
 import type { PageServerLoad } from './$types';
-import { getSignups, getCategories } from '$lib/db';
+import { getSignups, getCategories, getRsvps } from '$lib/db';
 
 export const load: PageServerLoad = async () => {
 	const signups = getSignups();
 	const categories = getCategories();
-	return { signups, categories };
+	const rsvps = getRsvps();
+	return { signups, categories, rsvps };
 };

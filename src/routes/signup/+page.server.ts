@@ -1,5 +1,5 @@
 import type { PageServerLoad, Actions } from './$types';
-import { getCategories, createSignup } from '$lib/db';
+import { getCategories, createSignup, createRsvp } from '$lib/db';
 import { fail, redirect } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async () => {
@@ -18,15 +18,12 @@ export const actions: Actions = {
 
 		const name = (data.get('name') as string)?.trim();
 		const contact_info = (data.get('contact_info') as string)?.trim() || null;
-		const category_ids = data.getAll('category_id').map((v) => parseInt(v as string));
+		const guest_count = parseInt(data.get('guest_count') as string);
+		const category_ids = data.getAll('category_id').map((v) => parseInt(v as string)).filter((v) => !isNaN(v));
 		const notes = (data.get('notes') as string)?.trim() || null;
 
 		if (!name || name.length < 2) {
 			return fail(400, { error: 'Please enter your name.' });
-		}
-
-		if (category_ids.length === 0 || category_ids.some(isNaN)) {
-			return fail(400, { error: 'Please select at least one item to bring.' });
 		}
 
 		if (name.length > 100) {
@@ -37,6 +34,14 @@ export const actions: Actions = {
 			return fail(400, { error: 'Contact info is too long.' });
 		}
 
+		if (isNaN(guest_count) || guest_count < 1 || guest_count > 50) {
+			return fail(400, { error: 'Please enter a valid party size (1–50).' });
+		}
+
+		// Always record the RSVP
+		createRsvp(name, contact_info, guest_count, notes);
+
+		// Optionally create potluck signups
 		for (const category_id of category_ids) {
 			try {
 				createSignup(name, contact_info, category_id, notes);

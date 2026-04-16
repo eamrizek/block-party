@@ -13,10 +13,10 @@
 <main class="container">
 	<div class="confirmation">
 		<div class="icon">🎊</div>
-		<h1>You're on the list, {name}!</h1>
-		<p>Thanks for signing up. We can't wait to see you at the block party!</p>
+		<h1>You're RSVPed, {name}!</h1>
+		<p>Thanks for letting us know you'll be there. We can't wait to see you at the block party!</p>
 		<p class="muted">
-			Saturday, June 20, 2026 · 3:00 PM – 8:00 PM<br />
+			Saturday, June 20, 2026 · 3:00 PM – 7:00 PM<br />
 			Nevada Avenue Cul-de-sac
 		</p>
 		<div class="actions">
