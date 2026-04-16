@@ -7,7 +7,7 @@
 		time: '3:00 PM – 7:00 PM',
 		location: 'Curtiss Ave between Nevada Ave and Jansen Ave',
 		address: '',
-		description: `Join your neighbors for our annual block party! We'll have games, music, and great food. Bring the whole family — kids, dogs, and lawn chairs welcome.`
+		description: `Join your neighbors for our annual block party! We'll have games, music, great food, and a keg. Bring the whole family — kids, dogs, and lawn chairs welcome. And stay tuned… we may have a sweet surprise in store. 🤫`
 	};
 </script>
 
@@ -53,6 +53,7 @@
 		<p>We're coordinating who brings what so we have a great spread without duplicates. Sign up below to claim a spot!</p>
 		<ul>
 			<li>A dish to share</li>
+			<li>Wine, beer, or canned cocktails for yourself and/or to share</li>
 			<li>Lawn chairs or a blanket</li>
 			<li>Your favorite outdoor game</li>
 			<li>Your best neighborhood stories 😄</li>
