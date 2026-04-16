@@ -74,7 +74,7 @@
 	}
 
 	h1 {
-		font-size: 2.5rem;
+		font-size: clamp(1.5rem, 5.5vw, 2.5rem);
 		margin-bottom: 1.5rem;
 		color: var(--color-primary);
 	}
