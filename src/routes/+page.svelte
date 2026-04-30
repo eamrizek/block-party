@@ -58,6 +58,7 @@
 			<li>Your favorite outdoor game</li>
 			<li>Your best neighborhood stories 😄</li>
 		</ul>
+		<p>Can't make it or prefer not to bring food? You're still welcome to <a href="https://venmo.com/u/Christina-Tasci" target="_blank" rel="noopener noreferrer">contribute via Venmo (@Christina-Tasci)</a> — every bit helps!</p>
 		<a href="/signup" class="btn btn-outline">Claim Your Spot →</a>
 	</section>
 </main>
